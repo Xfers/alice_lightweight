@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:alice_lightweight/model/alice_http_error.dart';
 import 'package:alice_lightweight/model/alice_http_call.dart';
+import 'package:alice_lightweight/model/alice_http_error.dart';
 import 'package:alice_lightweight/model/alice_http_response.dart';
 import 'package:alice_lightweight/ui/page/alice_calls_list_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +12,7 @@ class AliceCore {
   final bool darkTheme;
 
   /// Rx subject which contains all intercepted http calls
-  final BehaviorSubject<List<AliceHttpCall>> callsSubject =
-      BehaviorSubject.seeded([]);
+  final BehaviorSubject<List<AliceHttpCall>> callsSubject = BehaviorSubject.seeded([]);
 
   GlobalKey<NavigatorState> _navigatorKey;
   Brightness _brightness = Brightness.light;
@@ -44,8 +43,7 @@ class AliceCore {
   void navigateToCallListScreen() {
     var context = getContext();
     if (context == null) {
-      print(
-          "Cant start Alice HTTP Inspector. Please add NavigatorKey to your application");
+      print("Cant start Alice HTTP Inspector. Please add NavigatorKey to your application");
       return;
     }
     if (!_isInspectorOpened) {
@@ -64,7 +62,7 @@ class AliceCore {
 
   /// Add alice http call to calls subject
   void addCall(AliceHttpCall call) {
-    callsSubject.add([...callsSubject.value, call]);
+    callsSubject.add([call, ...callsSubject.value]);
   }
 
   /// Add error to exisng alice http call
@@ -97,8 +95,7 @@ class AliceCore {
     selectedCall.loading = false;
     selectedCall.response = response;
     if (selectedCall.request?.time.millisecondsSinceEpoch != null) {
-      selectedCall.duration = response.time.millisecondsSinceEpoch -
-          selectedCall.request!.time.millisecondsSinceEpoch;
+      selectedCall.duration = response.time.millisecondsSinceEpoch - selectedCall.request!.time.millisecondsSinceEpoch;
     }
 
     callsSubject.add([...callsSubject.value]);
@@ -108,7 +105,7 @@ class AliceCore {
   void addHttpCall(AliceHttpCall aliceHttpCall) {
     assert(aliceHttpCall.request != null, "Http call request can't be null");
     assert(aliceHttpCall.response != null, "Http call response can't be null");
-    callsSubject.add([...callsSubject.value, aliceHttpCall]);
+    callsSubject.add([aliceHttpCall, ...callsSubject.value]);
   }
 
   /// Remove all calls from calls subject
@@ -116,6 +113,6 @@ class AliceCore {
     callsSubject.add([]);
   }
 
-  AliceHttpCall? _selectCall(int requestId) => callsSubject.value
-      .firstWhere((call) => call.id == requestId, orElse: null);
+  AliceHttpCall? _selectCall(int requestId) =>
+      callsSubject.value.firstWhere((call) => call.id == requestId, orElse: null);
 }
