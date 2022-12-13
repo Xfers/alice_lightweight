@@ -64,7 +64,7 @@ class AliceCore {
 
   /// Add alice http call to calls subject
   void addCall(AliceHttpCall call) {
-    callsSubject.add([...callsSubject.value, call]);
+    callsSubject.add([call, ...callsSubject.value]);
   }
 
   /// Add error to exisng alice http call
@@ -108,7 +108,7 @@ class AliceCore {
   void addHttpCall(AliceHttpCall aliceHttpCall) {
     assert(aliceHttpCall.request != null, "Http call request can't be null");
     assert(aliceHttpCall.response != null, "Http call response can't be null");
-    callsSubject.add([...callsSubject.value, aliceHttpCall]);
+    callsSubject.add([aliceHttpCall, ...callsSubject.value]);
   }
 
   /// Remove all calls from calls subject
