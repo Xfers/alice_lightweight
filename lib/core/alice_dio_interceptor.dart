@@ -59,8 +59,8 @@ class AliceDioInterceptor extends InterceptorsWrapper {
         if (data.files.isNotEmpty == true) {
           List<AliceFormDataFile> files = [];
           data.files.forEach((entry) {
-            files.add(AliceFormDataFile(entry.value.filename ?? '',
-                entry.value.contentType.toString(), entry.value.length));
+            files.add(
+                AliceFormDataFile(entry.value.filename ?? '', entry.value.contentType.toString(), entry.value.length));
           });
 
           request.formDataFiles = files;
@@ -115,7 +115,7 @@ class AliceDioInterceptor extends InterceptorsWrapper {
   /// Handles error and adds data to alice http call
   @override
   void onError(
-    DioError error,
+    DioException error,
     ErrorInterceptorHandler handler,
   ) {
     var httpError = AliceHttpError();
@@ -139,8 +139,7 @@ class AliceDioInterceptor extends InterceptorsWrapper {
         httpResponse.size = 0;
       } else {
         httpResponse.body = error.response?.data;
-        httpResponse.size =
-            utf8.encode(error.response?.data.toString() ?? '').length;
+        httpResponse.size = utf8.encode(error.response?.data.toString() ?? '').length;
       }
       Map<String, String> headers = Map();
       error.response?.headers.forEach((header, values) {
