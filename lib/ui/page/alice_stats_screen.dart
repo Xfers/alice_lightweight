@@ -13,6 +13,7 @@ class AliceStatsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData(
+        useMaterial3: false,
         brightness: aliceCore.brightness,
         colorScheme: ColorScheme.fromSwatch()
             .copyWith(secondary: AliceConstants.lightRed),

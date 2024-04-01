@@ -32,6 +32,7 @@ class _AliceCallDetailsScreenState extends State<AliceCallDetailsScreen>
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData(
+        useMaterial3: false,
         brightness: widget.core.brightness,
         colorScheme: ColorScheme.fromSwatch()
             .copyWith(secondary: AliceConstants.lightRed),
